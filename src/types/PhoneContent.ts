@@ -7,7 +7,7 @@ export interface PhoneContent {
 
 export type Message = TextMessage | TimeMessage | ImageMessage;
 
-export interface TimeMessage extends Message {
+export interface TimeMessage {
   type: 'time';
   day: string;
   time: string;

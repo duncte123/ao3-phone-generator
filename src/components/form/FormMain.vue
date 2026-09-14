@@ -1,9 +1,10 @@
 <script setup lang="ts">
-  import { ref, reactive, defineEmits } from 'vue';
-  import type { Message, PhoneContent } from '@/types/PhoneContent.ts'
+  import { ref, reactive, defineEmits, unref } from 'vue';
+  import type { Message, PhoneContent, TextMessage } from '@/types/PhoneContent.ts'
   import TimeMessageForm from '@/components/form/TimeMessageForm.vue'
+  import TextMessageForm from '@/components/form/TextMessageForm.vue'
 
-  defineEmits<{
+  const emit = defineEmits<{
     update: [content: PhoneContent],
   }>();
 
@@ -14,6 +15,8 @@
     messages: [],
   });
 
+  // TODO: list of names that the user supplies and can pick from (helps with consistency)
+
   function addMessage() {
     const newMessage: Message = {
       type: 'message',
@@ -22,6 +25,28 @@
     };
 
     phoneContent.messages.push(newMessage);
+  }
+
+  addMessage();
+
+  function deleteMessage(idx: number) {
+    phoneContent.messages.splice(idx, 1);
+  }
+
+  function updatePreview() {
+    const content: PhoneContent = phoneContent;
+
+    if (!content.chatName && !content.isGroup) {
+      const found = content.messages.find(
+        (msg) => msg.type === 'message' && msg.name !== content.recipient,
+      );
+
+      // @ts-ignore it's always a text message.
+      content.chatName = found?.name ?? 'Unknown Recipient';
+    }
+
+    // @ts-ignore what?
+    emit('update', content);
   }
 </script>
 
@@ -44,11 +69,18 @@
         <option value="img">Photo</option>
       </select>
 
-      <TimeMessageForm v-model="phoneContent.messages[idx]" v-if="phoneContent.messages[idx].type === 'time'" />
+      <TextMessageForm v-model="phoneContent.messages[idx]" v-if="phoneContent.messages[idx].type === 'message'" />
+      <TimeMessageForm v-model="phoneContent.messages[idx]" v-else-if="phoneContent.messages[idx].type === 'time'" />
+
+      <button type="button"
+              class="delete"
+              @click.prevent="deleteMessage(idx)"
+              :disabled="phoneContent.messages.length === 1"
+      >Delete</button>
     </div>
 
     <div class="form-line row">
-      <button type="button" @click.prevent="$emit('update', phoneContent)">Update Preview</button>
+      <button type="button" @click.prevent="updatePreview()">Update Preview</button>
       <button type="button" @click.prevent="addMessage()">Add Message</button>
     </div>
   </form>
@@ -67,5 +99,18 @@
   button {
     padding: 10px;
     border-radius: 0 0 10px 0;
+    cursor: pointer;
+
+    &.delete {
+      padding: unset;
+      border-radius: unset;
+      font-weight: bold;
+      background: #f85353;
+
+      &[disabled] {
+        background: #ffa0a0;
+        cursor: not-allowed;
+      }
+    }
   }
 </style>

@@ -1,14 +1,28 @@
 <script setup lang="ts">
+import { useTemplateRef } from 'vue';
+
 import FormMain from '@/components/form/FormMain.vue'
+import type { PhoneContent } from '@/types/PhoneContent.ts'
+import { renderPhoneContent } from '@/utils/phoneUtils.ts'
+
+const iframe = useTemplateRef<HTMLIFrameElement>('iframe');
+
+function setIframeContent(content: PhoneContent) {
+  const rendered = renderPhoneContent(content);
+
+  iframe.value!.contentWindow!.document.write(rendered);
+}
 </script>
 
 <template>
   <header>
-    <FormMain />
+    <FormMain @update="setIframeContent" />
   </header>
 
   <main>
-    right
+    right: preview (has toggle for disabling workskin)
+
+    <iframe ref="iframe" src="" frameborder="1" width="100%" height="100%"></iframe>
   </main>
 </template>
 
