@@ -9,10 +9,26 @@
   }>();
 
   const phoneContent = reactive<PhoneContent>({
-    recipient: '',
+    recipient: 'Danny',
     isGroup: false,
     chatName: '',
-    messages: [],
+    messages: [
+      {
+        type: 'time',
+        day: 'Monday',
+        time: '15:53',
+      },
+      {
+        type: 'message',
+        name: 'Danny',
+        text: 'Hi Jazz'
+      },
+      {
+        type: 'message',
+        name: 'Jazz',
+        text: 'Hi Danny'
+      },
+    ],
   });
 
   // TODO: list of names that the user supplies and can pick from (helps with consistency)
@@ -27,7 +43,7 @@
     phoneContent.messages.push(newMessage);
   }
 
-  addMessage();
+  // addMessage();
 
   function deleteMessage(idx: number) {
     phoneContent.messages.splice(idx, 1);

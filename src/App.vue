@@ -3,14 +3,28 @@ import { useTemplateRef } from 'vue';
 
 import FormMain from '@/components/form/FormMain.vue'
 import type { PhoneContent } from '@/types/PhoneContent.ts'
-import { renderPhoneContent } from '@/utils/phoneUtils.ts'
+import { getStyle, renderPhoneContent } from '@/utils/phoneUtils.ts'
 
 const iframe = useTemplateRef<HTMLIFrameElement>('iframe');
 
 function setIframeContent(content: PhoneContent) {
   const rendered = renderPhoneContent(content);
 
-  iframe.value!.contentWindow!.document.write(rendered);
+  const style = document.createElement('style');
+
+  style.innerHTML = getStyle();
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'workskin';
+
+  wrapper.innerHTML = rendered;
+
+  const body = document.createElement('body');
+
+  body.append(style, wrapper)
+
+  iframe.value!.style.backgroundColor = 'lightgray';
+  iframe.value!.contentWindow!.document.body.innerHTML = body.innerHTML
 }
 </script>
 
@@ -22,7 +36,7 @@ function setIframeContent(content: PhoneContent) {
   <main>
     right: preview (has toggle for disabling workskin)
 
-    <iframe ref="iframe" src="" frameborder="1" width="100%" height="100%"></iframe>
+    <iframe ref="iframe" frameborder="1" width="100%" height="100%"></iframe>
   </main>
 </template>
 

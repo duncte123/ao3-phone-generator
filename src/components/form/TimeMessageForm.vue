@@ -19,7 +19,7 @@
   </div>
   <div class="form-line">
     <label for="time">Time (e.g. 19:25 or 5:38 AM)</label>
-    <input type="text" id="time" name="time" v-model="modelValue.day" />
+    <input type="text" id="time" name="time" v-model="modelValue.time" />
   </div>
 </template>
 
