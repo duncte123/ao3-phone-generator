@@ -15,4 +15,4 @@ jobs:
           node-version: 24
           package-manager-cache: true # Disable automatic npm caching if not required
       - run: npm ci
-      - run: npm build-only
+      - run: npm run build-only
