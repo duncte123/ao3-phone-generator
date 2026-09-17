@@ -117,11 +117,9 @@ export function getStyle(): string {
     min-height: 75%;
     clear: both;
     position: relative;
-    /*background-image: url("YOUR IMAGE URL HERE");*/
     background-repeat: no-repeat;
     background-size: 100%;
     display: inline-block;
-    /*padding-top: 50%;*/
 }
 `;
 }

@@ -64,6 +64,8 @@
     // @ts-ignore what?
     emit('update', content);
   }
+
+  updatePreview();
 </script>
 
 <template>
@@ -72,6 +74,8 @@
       <label for="recipient">Recipient (person that's looking at the phone)</label>
       <input type="text" name="recipient" id="recipient" v-model="phoneContent.recipient" />
     </div>
+
+    <hr />
 
     <div v-if="phoneContent.isGroup" class="form-line">
       <label for="group">Group name</label>
@@ -93,6 +97,8 @@
               @click.prevent="deleteMessage(idx)"
               :disabled="phoneContent.messages.length === 1"
       >Delete</button>
+
+      <hr />
     </div>
 
     <div class="form-line row">
@@ -110,6 +116,11 @@
     div {
 
     }
+  }
+
+  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   button {

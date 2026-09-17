@@ -1,30 +1,15 @@
 <script setup lang="ts">
-import { useTemplateRef } from 'vue';
+import { ref } from 'vue'
 
 import FormMain from '@/components/form/FormMain.vue'
 import type { PhoneContent } from '@/types/PhoneContent.ts'
-import { getStyle, renderPhoneContent } from '@/utils/phoneUtils.ts'
+import { renderPhoneContent } from '@/utils/phoneUtils.ts'
+import RendererWrapper from '@/components/renderer/RendererWrapper.vue'
 
-const iframe = useTemplateRef<HTMLIFrameElement>('iframe');
+const renderedHtml = ref('<h1>Press update to see a preview</h1>')
 
 function setIframeContent(content: PhoneContent) {
-  const rendered = renderPhoneContent(content);
-
-  const style = document.createElement('style');
-
-  style.innerHTML = getStyle();
-
-  const wrapper = document.createElement('div');
-  wrapper.id = 'workskin';
-
-  wrapper.innerHTML = rendered;
-
-  const body = document.createElement('body');
-
-  body.append(style, wrapper)
-
-  iframe.value!.style.backgroundColor = 'lightgray';
-  iframe.value!.contentWindow!.document.body.innerHTML = body.innerHTML
+  renderedHtml.value = renderPhoneContent(content);
 }
 </script>
 
@@ -33,11 +18,19 @@ function setIframeContent(content: PhoneContent) {
     <FormMain @update="setIframeContent" />
   </header>
 
-  <main>
+<!--  <main>
     right: preview (has toggle for disabling workskin)
 
     <iframe ref="iframe" frameborder="1" width="100%" height="100%"></iframe>
+  </main>-->
+
+  <main>
+    <RendererWrapper :html-content="renderedHtml"/>
   </main>
+
+  <footer>
+    <a href="" target="_blank">Source code</a> - <a href="" target="_blank">CodenameCarrot's fic</a>
+  </footer>
 </template>
 
 <style scoped>
