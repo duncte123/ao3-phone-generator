@@ -23,7 +23,7 @@ function setIframeContent(content: PhoneContent) {
   </main>
 
   <footer>
-    <a href="https://github.com/duncte123/ao3-phone-generator" target="_blank">Source code</a> - <a href="https://archiveofourown.org/works/6434845/chapters/14729722" target="_blank">CodenameCarrot's fic explaining the html</a>
+    <a href="https://github.com/duncte123/ao3-phone-generator" target="_blank">Source code</a> - <a href="https://archiveofourown.org/works/6434845/chapters/14729722" target="_blank">CodenameCarrot's fic explaining the html</a> - Made by Humans, for Humans. No AI was used to build this project.
   </footer>
 </template>
 
