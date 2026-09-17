@@ -3,6 +3,7 @@
   import type { Message, PhoneContent } from '@/types/PhoneContent.ts'
   import TimeMessageForm from '@/components/form/TimeMessageForm.vue'
   import TextMessageForm from '@/components/form/TextMessageForm.vue'
+  import ImgMessageForm from '@/components/form/ImgMessageForm.vue'
 
   const emit = defineEmits<{
     update: [content: PhoneContent],
@@ -27,6 +28,11 @@
         type: 'message',
         name: 'Jazz',
         text: 'Hi Danny'
+      },
+      {
+        type: 'img',
+        url: 'https://i.duncte123.me/ao3/livaaaa/img/InvisoSnoozing.png',
+        desc: 'Demo image'
       },
     ],
   });
@@ -90,6 +96,7 @@
       </select>
 
       <TextMessageForm v-model="phoneContent.messages[idx]" v-if="phoneContent.messages[idx].type === 'message'" />
+      <ImgMessageForm v-model="phoneContent.messages[idx]" v-else-if="phoneContent.messages[idx].type === 'img'" />
       <TimeMessageForm v-model="phoneContent.messages[idx]" v-else-if="phoneContent.messages[idx].type === 'time'" />
 
       <button type="button"
