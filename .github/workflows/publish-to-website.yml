@@ -22,7 +22,7 @@ jobs:
       - name: Sync Files
         uses: milanmk/actions-file-deployer@1.18
         with:
-          #sync: "full"
+          sync: "full"
           remote-protocol: "ftp"
           remote-port: "21"
           remote-host: ${{ secrets.FTP_HOST }}
