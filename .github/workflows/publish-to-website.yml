@@ -16,3 +16,15 @@ jobs:
           package-manager-cache: true # Disable automatic npm caching if not required
       - run: npm ci
       - run: npm run build-only
+
+      - name: Sync Files
+        uses: milanmk/actions-file-deployer@1.18
+        with:
+          sync: "full"
+          remote-protocol: "ftp"
+          remote-port: "21"
+          remote-host: ${{ secrets.FTP_HOST }}
+          remote-user: ${{ secrets.FTP_USER }}
+          remote-password: ${{ secrets.FTP_PASSWORD }}
+          remote-path: "/"
+          local-path: "./dist/"
