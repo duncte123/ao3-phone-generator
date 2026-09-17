@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { ref, reactive, defineEmits, unref } from 'vue';
-  import type { Message, PhoneContent, TextMessage } from '@/types/PhoneContent.ts'
+  import { reactive } from 'vue';
+  import type { Message, PhoneContent } from '@/types/PhoneContent.ts'
   import TimeMessageForm from '@/components/form/TimeMessageForm.vue'
   import TextMessageForm from '@/components/form/TextMessageForm.vue'
 

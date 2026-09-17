@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { defineEmits, defineProps } from 'vue';
   import type { TextMessage } from '@/types/PhoneContent.ts'
 
   defineProps<{
