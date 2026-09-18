@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <p>This CSS code does should be placed in your workskin for your fic.
+  <p>This CSS code needs to be placed in the workskin for your fic.
     It already contains everything you need for this generator.</p>
   <textarea :value="css" readonly/>
 </template>
