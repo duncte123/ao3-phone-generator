@@ -1,23 +1,23 @@
 on:
   push:
     branches:
-      - main
+      - build
 
 jobs:
-  build:
+  upload:
     runs-on: ubuntu-latest
-    name: Build vue app
+    name: Upload vue app
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Setup node
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          package-manager-cache: true # Disable automatic npm caching if not required
-      - run: npm ci
-      - run: npm run build-only
+#      - name: Setup node
+#        uses: actions/setup-node@v7
+#        with:
+#          node-version: 24
+#          package-manager-cache: true # Disable automatic npm caching if not required
+#      - run: npm ci
+#      - run: npm run build-only
 
       - name: Sync Files
         uses: milanmk/actions-file-deployer@1.18
