@@ -56,15 +56,27 @@
   }
 
   function updatePreview() {
-    const content: PhoneContent = phoneContent;
+    const content: PhoneContent = JSON.parse(JSON.stringify(phoneContent));
 
-    if (!content.chatName && !content.isGroup) {
-      const found = content.messages.find(
-        (msg) => msg.type === 'message' && msg.name !== content.recipient,
-      );
+    if (content.isGroup) {
+      if (!content.chatName) {
+        content.chatName = 'Unnamed Chat';
+      }
+    } else {
+      let firstSenderName: string | null = null;
 
-      // @ts-ignore it's always a text message.
-      content.chatName = found?.name ?? 'Unknown Recipient';
+      // Fix up any stray magical non people in a 1 to 1 convo
+      for (const msg of content.messages) {
+        if (msg.type === 'message' && msg.name !== content.recipient) {
+          if (!firstSenderName) {
+            firstSenderName = msg.name;
+          } else {
+            msg.name = firstSenderName;
+          }
+        }
+      }
+
+      content.chatName = firstSenderName ?? 'Unknown Recipient';
     }
 
     // @ts-ignore what?
@@ -81,12 +93,17 @@
       <input type="text" name="recipient" id="recipient" v-model="phoneContent.recipient" />
     </div>
 
-    <hr />
+    <div class="form-line row">
+      <input type="checkbox" v-model="phoneContent.isGroup" name="isGroup" id="isGroup" />
+      <label for="isGroup">This is a group chat</label>
+    </div>
 
-    <div v-if="phoneContent.isGroup" class="form-line">
+   <div v-if="phoneContent.isGroup" class="form-line">
       <label for="group">Group name</label>
       <input type="text" name="group" id="group" v-model="phoneContent.chatName" />
     </div>
+
+    <hr />
 
     <div class="form-line" v-for="(message, idx) in phoneContent.messages" :key="`${idx}-${message.type}`">
       <select name="type" id="type" v-model="phoneContent.messages[idx].type">
@@ -120,8 +137,9 @@
     display: flex;
     flex-direction: column;
 
-    div {
-
+    &.row {
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 

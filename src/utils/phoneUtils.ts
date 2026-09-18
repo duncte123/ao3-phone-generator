@@ -143,7 +143,7 @@ export function renderPhoneContent({ chatName, isGroup, recipient, messages }: P
 
       case 'img': {
         content.push(
-          `<a href="${cfg.url}" target="_blank"><img src="${cfg.url}" alt="${cfg.desc}" title="${cfg.desc}" width="50%" class="image" /></a>`,
+          `<a href="${cfg.url}" target="_blank"><img src="${cfg.url}" alt="${cfg.desc}" title="${cfg.desc}" width="50%" class="image" /></a><br />`,
         );
         break;
       }
