@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - build
+  workflow_dispatch: {}
 
 jobs:
   upload:
@@ -12,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          ref: build
           fetch-depth: 0
 
       - name: Sync Files
