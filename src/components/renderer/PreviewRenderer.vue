@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { onMounted, useTemplateRef, ref, defineProps, watch } from 'vue';
-  import type { PhoneContent } from '@/types/PhoneContent.ts'
   import { getStyle } from '@/utils/phoneUtils.ts'
 
   const workskinEnabled = ref(true);
