@@ -29,7 +29,7 @@
 
     body.append(wrapper);
 
-    iframe.value!.style.backgroundColor = 'lightgray';
+    iframe.value!.style.backgroundColor = 'ghostwhite';
     iframe.value!.contentWindow!.document.body.innerHTML = body.innerHTML
   }
 
@@ -51,12 +51,14 @@
     <label for="workskinToggle">Enable css in workskin </label>
     <input type="checkbox" v-model="workskinEnabled" id="workskinToggle" />
   </div>
-  <iframe ref="iframe" frameborder="1" width="100%" height="100%"></iframe>
+  <iframe ref="iframe" width="100%" height="100%"></iframe>
 </template>
 
 <style scoped lang="scss">
 iframe {
   min-width: 500px;
   min-height: 500px;
+  height: 80vh;
+  border: 1px solid blue;
 }
 </style>

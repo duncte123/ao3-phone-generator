@@ -30,6 +30,11 @@
         text: 'Hi Danny'
       },
       {
+        type: 'time',
+        day: 'Today',
+        time: '1:05 AM',
+      },
+      {
         type: 'img',
         url: 'https://i.duncte123.me/ao3/livaaaa/img/InvisoSnoozing.png',
         desc: 'Demo image'
