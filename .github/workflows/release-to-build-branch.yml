@@ -1,0 +1,66 @@
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build vue app
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets['GITHUB_TOKEN'] }}
+          ref: main
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: true # Disable automatic npm caching if not required
+      - name: Set local git config user details
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: (Re)checkout both branches
+        id: checkout
+        continue-on-error: true
+        run: |
+          git checkout main
+          git checkout build
+
+      - name: Merge base into build (1)
+        if: ${{ steps.checkout.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          git merge --no-commit main
+
+      - run: npm ci
+      - run: npm run build-only
+
+      - name: Commit built files (1)
+        run: |
+          git add -f dist
+          git commit -m "Built files" -a --allow-empty
+
+      - name: Push built files to build branch
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets['GITHUB_TOKEN'] }}
+          branch: build
+
+#      - name: Sync Files
+#        uses: milanmk/actions-file-deployer@1.18
+#        with:
+#          sync: "full"
+#          remote-protocol: "ftp"
+#          remote-port: "21"
+#          remote-host: ${{ secrets.FTP_HOST }}
+#          remote-user: ${{ secrets.FTP_USER }}
+#          remote-password: ${{ secrets.FTP_PASSWORD }}
+#          remote-path: "/"
+#          local-path: "./dist/"
